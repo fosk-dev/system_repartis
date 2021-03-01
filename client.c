@@ -21,7 +21,7 @@ static int copy(char *src, char *dst){
   
   
   position = 0;
-   int d_f = open(dst, O_CREAT | O_WRONLY | S_IRWXU ) ;
+   int d_f = open(dst, O_CREAT | O_WRONLY | S_IRWXU, 777 ) ;
   do{
     memset(&m1, 0, sizeof(m1));
     m1.opcode = READ;

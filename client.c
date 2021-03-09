@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>          
 #include <sys/socket.h>
@@ -19,9 +20,8 @@ static int copy(char *src, char *dst){
   long position;
   long client = 110;
   
-  
   position = 0;
-   int d_f = open(dst, O_CREAT | O_WRONLY | S_IRWXU, 777 ) ;
+  int d_f = open(dst, O_CREAT | O_WRONLY | S_IRWXU, 777 ) ;
   do{
     memset(&m1, 0, sizeof(m1));
     m1.opcode = READ;
@@ -35,7 +35,7 @@ static int copy(char *src, char *dst){
     /*write the data just received to the destination file*/
        
     lseek(d_f, position, SEEK_SET);
-    int    r = write(d_f, m1.data, m1.count);
+    int r = write(d_f, m1.data, m1.count);
     if( r < 0) {
     	fprintf(stderr, "erreur d ecriture dans le fichier de destination %d",errno);
         close(d_f);
@@ -67,12 +67,26 @@ static int initialize(char *server_ipaddr, char *server_port){
 }
 
 int main(int argc, char * argv[]){
-  if(argc != 5){
-    fprintf(stderr, "USAGE %s <server_addr> <server_port> <src> <dst> \n", argv[0] );
+  if(argc != 6){
+    fprintf(stderr, "USAGE %s <server_addr> <server_port> <feature> <src> <dst> \n", argv[0] );
     return 0;
   }
   initialize(argv[1], argv[2]);
-  copy(argv[3], argv[4]);
+  int a = atoi(argv[3]);
+  // fprintf(stderr, "USAGE %s, %s <server_addr> <server_port> <feature> <src> <dst> \n", argv[0],argv[3] );
+  
+  switch (a) {
+    case MOVE:
+      break;
+    case COPY:
+      copy(argv[4], argv[5]);
+      break;
+    case SEND:
+      break;
+    default:
+      fprintf(stderr, "VALIDATOR %s \"feature\"\n\t option:\n\t\t 1 move file\n\t\t 2 copy file\n\t\t 3 send file\n", argv[0] );
+      return 0;
+  }
   release();
   return 0;
 }

@@ -9,9 +9,14 @@
 
 /* definitions of the allowed operations*/
 #define CREATE 1         /*Create a new file*/
-#define READ   2          /* read date from a file and return it*/
-#define WRITE 3          /* write data to a file*/
+#define READ   2          /* read data from a file and return it*/
+#define WRITE  3          /* write data to a file*/
 #define DELETE 4         /* delete an existing file*/
+
+#define MOVE 1         /* Move file to destination*/
+#define COPY 2          /* Copy file */
+#define SEND 3          /* Send file */
+
 #define OK 0             /*Operation performed correctly*/
 #define E_BAD_OPCODE -1  /* Unknown operation requested*/
 #define E_BAD_PARAM -2   /* error in a parameter*/

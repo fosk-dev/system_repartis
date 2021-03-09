@@ -6,6 +6,8 @@
 #include <errno.h>
 #include <unistd.h>
 #include "message.h"
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int csd;
 int sd;
